@@ -5,20 +5,13 @@ import PropTypes from "prop-types";
 export class PlayerOptions extends React.Component {
   constructor(props) {
     super(props);
-    // https://reactjs.org/docs/typechecking-with-proptypes.html
-    this.propTypes = {
-      // Emit event to parent
-      // https://www.newmediacampaigns.com/blog/react-bubble-events
-      onPlayerChange: PropTypes.func.isRequired
-    };
-
     this.updateSelectedPlayer = this.updateSelectedPlayer.bind(this);
     this.state = {
-      selectedPlayer: "",
+      selectedPlayer: ""
     };
   }
 
-  renderOptions() {
+  renderOptionsList() {
     return (
       <>
         <option key="none" value="">
@@ -50,13 +43,19 @@ export class PlayerOptions extends React.Component {
     return (
       <div>
         <select
-          value={this.state.selectedPlayer}
           placeholder="Select option"
           onChange={this.updateSelectedPlayer}
         >
-          {this.renderOptions()}
+          {this.renderOptionsList()}
         </select>
       </div>
     );
   }
 }
+
+// https://reactjs.org/docs/typechecking-with-proptypes.html
+PlayerOptions.propTypes = {
+  // Emit event to parent
+  // https://www.newmediacampaigns.com/blog/react-bubble-events
+  onPlayerChange: PropTypes.func.isRequired
+};

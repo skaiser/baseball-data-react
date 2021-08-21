@@ -15,12 +15,9 @@ export class PitchView extends React.Component {
       { value: "all", displayName: "All" },
       { value: "ball", displayName: "Balls" },
       { value: "strike", displayName: "Strikes" },
-      {
-        value: "swinging_strike",
-        displayName: "Swinging Strikes"
-      },
+      { value: "swinging_strike", displayName: "Swinging Strikes" },
       { value: "strikeout", displayName: "Strikeouts" },
-      { value: "in_play", displayName: "In Play" }
+      { value: "hit_into_play", displayName: "In Play" }
     ];
 
     this.updatePlayer = this.updatePlayer.bind(this);
@@ -76,7 +73,7 @@ export class PitchView extends React.Component {
     const pitchEvents = this.state.pitchMap.get(selectedPlayer) || [];
     this.setState({ selectedPlayer, pitchEvents }, () => {
       this.renderPitchEvents(pitchEvents);
-      this.updateFilters(['all']);
+      this.updateFilters(["all"]);
       console.log("event from child", this.state.selectedPlayer);
     });
   }
@@ -85,11 +82,13 @@ export class PitchView extends React.Component {
     this.setState({ appliedFilters: filters });
     const pitchEvents =
       this.state.pitchMap.get(this.state.selectedPlayer) || [];
-    console.log("pitchEvents %s", this.state.selectedPlayer, pitchEvents);
+    console.log("all pitchEvents %s", this.state.selectedPlayer, pitchEvents);
+    
     if (filters[0] === "all") {
       this.setState({ pitchEvents });
       return;
     }
+    
     this.setState(
       {
         pitchEvents: pitchEvents.filter(p => {
@@ -123,12 +122,16 @@ export class PitchView extends React.Component {
             onFiltersChange={this.updateFilters}
           />
         )}
-        <div>
-          {!this.state.isLoaded && <Spinner />}
-          {this.state.isLoaded && (
+        {!this.state.isLoaded && <Spinner />}
+        {this.state.isLoaded &&
+         <div>
+            {this.state.selectedPlayer && 
+              <p>Pitch count: {this.state.pitchEvents.length || 0}</p>
+            }
+            {
             <ul>{this.renderPitchEvents(this.state.pitchEvents)}</ul>
-          )}
-        </div>
+            }
+        </div>}
       </>
     );
   }
