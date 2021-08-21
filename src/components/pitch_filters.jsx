@@ -65,5 +65,6 @@ export class PitchFilters extends React.Component {
 PitchFilters.propTypes = {
   onFiltersChange: PropTypes.func.isRequired,
   // TODO(kaisers): Add Array<{value, displayName}> type
+  // TODO(kaisers): Also consider keeping this defined locally
   filterOptions: PropTypes.array
 };
