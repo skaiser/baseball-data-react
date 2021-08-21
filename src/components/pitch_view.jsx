@@ -1,23 +1,16 @@
 import * as React from "react";
-import { Spinner, Select } from "@chakra-ui/react";
+import { Spinner } from "@chakra-ui/react";
 import Request from "axios-react";
 import axios from "axios";
-import {Header} from "../components/header";
-import PropTypes from 'prop-types';
+import { Header } from "../components/header";
+import { PlayerOptions } from "../components/player_options";
+import { PitchFilters } from "../components/pitch_filters";
+import PropTypes from "prop-types";
 
-class PlayerOptions extends React.Component {
+export class PitchView extends React.Component {
   constructor(props) {
     super(props);
-    // https://reactjs.org/docs/typechecking-with-proptypes.html
-    this.propTypes = {
-      // Emit event to parent 
-      // https://www.newmediacampaigns.com/blog/react-bubble-events
-      onPlayerChange: PropTypes.func.isRequired,
-    }
-    
-    this.updateSelectedPlayer = this.updateSelectedPlayer.bind(this);
-    this.updateFilters = this.updateFilters.bind(this);
-    
+
     this.filterOptions = [
       { value: "all", displayName: "All" },
       { value: "ball", displayName: "Balls" },
@@ -29,110 +22,13 @@ class PlayerOptions extends React.Component {
       { value: "strikeout", displayName: "Strikeouts" },
       { value: "in_play", displayName: "In Play" }
     ];
-    this.state = {
-      selectedPlayer: props.players[0],
-      appliedFilters: ['all'],
-      pitchEvents: [],
-    };
-  }
 
-  renderFilters() {
-    return (
-      <select value={this.state.appliedFilters}
-          placeholder="Select option"
-          onChange={this.updateFilters}>
-        {this.filterOptions.map((option, index) => {
-          return (
-            <option key={index} value={option.value}>
-              {option.displayName}
-            </option>
-          );
-        })}
-      </select>
-    );
-  }
+    this.updatePlayer = this.updatePlayer.bind(this);
+    this.updateFilters = this.updateFilters.bind(this);
 
-  renderOptions() {
-    return this.props.players.map((player, index) => {
-      return (
-        <option key={index} value={player}>
-          {player}
-        </option>
-      );
-    });
-  }
-
-  updateSelectedPlayer(event) {
-    if (!event) {
-      return;
-    }
-    const selectedPlayer = event.target.value;
-    console.log("event", selectedPlayer);
-    const pitchEvents = this.props.pitchMap.get(selectedPlayer) || [];
-    this.setState({ selectedPlayer, pitchEvents });
-    this.props.onPlayerChange(selectedPlayer);
-    // TODO(kaisers): Update Filters based on selection.
-    this.updateFilters(null);
-  }
-
-  updateFilters(filters) {
-    console.log('selected filters', filters);
-    const maybeEvent = filters && filters.target && filters.target.selectedOptions;
-    if (maybeEvent) {
-      // TODO(kaisers): How to get the full list?
-      filters = [filters.target.selectedOptions[0].value];
-    }
-    if (!filters) {
-      filters = this.state.appliedFilters;
-    }
-    console.log('filters', filters);
-    this.setState({ appliedFilters: filters });
-    // TODO(kaisers): this.state.selectedPlayer is not set initially
-    const pitchEvents =
-      this.props.pitchMap.get(this.state.selectedPlayer) || [];
-    console.log('pitchEvents %s', this.state.selectedPlayer, pitchEvents);
-    if (filters[0] === "all") {
-      this.setState({ pitchEvents });
-      return;
-    }
-    this.setState({
-      pitchEvents: pitchEvents.filter(p => {
-        let found = false;
-        for (const filter of filters) {
-          if (p.event_type === filter || p.event_result === filter) {
-            found = true;
-            break;
-          }
-        }
-        return found;
-      })
-    });
-  }
-
-  render() {
-    console.log('appliedFilters', this.state.appliedFilters);
-    return (
-      <div>
-        <select
-          value={this.state.selectedPlayer}
-          placeholder="Select option"
-          onChange={this.updateSelectedPlayer}
-        >
-          {this.renderOptions()}
-        </select>
-        {this.state.appliedFilters.length > 0 && this.renderFilters()}
-      </div>
-    );
-  }
-}
-
-export class PitchView extends React.Component {
-  constructor(props) {
-    super(props);
-    
     this.state = {
       isLoaded: false,
-      allPitchEvents: [],
+      filterOptions: this.filterOptions,
       players: [],
       pitchMap: new Map()
     };
@@ -167,20 +63,53 @@ export class PitchView extends React.Component {
           pitchMap.set(v, pitcherPitches);
         });
         this.setState({
-          allPitchEvents,
           players: sortedPlayers,
           pitchMap,
+          pitchEvents: [],
+          selectedPlayer: "",
           isLoaded: true
         });
       });
   }
-  
-  updatePlayer(player) {
-    console.log('event from child', player);
+
+  updatePlayer(selectedPlayer) {
+    const pitchEvents = this.state.pitchMap.get(selectedPlayer) || [];
+    this.setState({ selectedPlayer, pitchEvents }, () => {
+      this.renderPitchEvents(pitchEvents);
+      this.updateFilters(['all']);
+      console.log("event from child", this.state.selectedPlayer);
+    });
+  }
+
+  updateFilters(filters) {
+    this.setState({ appliedFilters: filters });
+    const pitchEvents =
+      this.state.pitchMap.get(this.state.selectedPlayer) || [];
+    console.log("pitchEvents %s", this.state.selectedPlayer, pitchEvents);
+    if (filters[0] === "all") {
+      this.setState({ pitchEvents });
+      return;
+    }
+    this.setState(
+      {
+        pitchEvents: pitchEvents.filter(p => {
+          let found = false;
+          for (const filter of filters) {
+            if (p.event_type === filter || p.event_result === filter) {
+              found = true;
+              break;
+            }
+          }
+          return found;
+        })
+      },
+      () => {
+        this.renderPitchEvents(this.state.pitchEvents);
+      }
+    );
   }
 
   render() {
-    // TODO(kaisers): Add pitch list component to list pitches when it changes
     return (
       <>
         <PlayerOptions
@@ -188,10 +117,16 @@ export class PitchView extends React.Component {
           pitchMap={this.state.pitchMap}
           onPlayerChange={this.updatePlayer}
         />
+        {this.state.selectedPlayer && (
+          <PitchFilters
+            filterOptions={this.state.filterOptions}
+            onFiltersChange={this.updateFilters}
+          />
+        )}
         <div>
           {!this.state.isLoaded && <Spinner />}
           {this.state.isLoaded && (
-            <ul>{this.renderPitchEvents(this.state.allPitchEvents)}</ul>
+            <ul>{this.renderPitchEvents(this.state.pitchEvents)}</ul>
           )}
         </div>
       </>
