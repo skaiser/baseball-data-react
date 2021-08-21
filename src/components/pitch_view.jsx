@@ -129,10 +129,7 @@ class PlayerOptions extends React.Component {
 export class PitchView extends React.Component {
   constructor(props) {
     super(props);
-    this.title = "Astros";
-    this.logoUrl =
-      "https://cdn.glitch.com/b4e96ff5-0789-4fd2-b6cd-b057aaad1090%2F117.svg?v=1629180035695";
-
+    
     this.state = {
       isLoaded: false,
       allPitchEvents: [],
@@ -141,7 +138,7 @@ export class PitchView extends React.Component {
     };
   }
 
-  renderAllPitchEvents(pitches) {
+  renderPitchEvents(pitches) {
     return pitches.map(item => <li key={item.play_id}>{item.pitch_name}</li>);
   }
 
@@ -194,7 +191,7 @@ export class PitchView extends React.Component {
         <div>
           {!this.state.isLoaded && <Spinner />}
           {this.state.isLoaded && (
-            <ul>{this.renderAllPitchEvents(this.state.allPitchEvents)}</ul>
+            <ul>{this.renderPitchEvents(this.state.allPitchEvents)}</ul>
           )}
         </div>
       </>
