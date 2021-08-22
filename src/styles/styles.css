@@ -54,4 +54,5 @@ video {
 
 .chakra-select__wrapper {
   margin-bottom: 16px;
+  max-width: 300px;
 }
