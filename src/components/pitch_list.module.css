@@ -1,5 +1,7 @@
 .container {
-/*   max-width: 375px; */
+  height: 100%;
+  border-right: 1px solid #e1e2db;
+  border-bottom: 1px solid #e1e2db;
 }
 
 .events {
@@ -11,8 +13,6 @@
   /* 64px == computed height of .instructions */
   height: calc(100% - 64px);
   overflow-y: scroll;
-  border-right: 1px solid #e1e2db;
-  border-bottom: 1px solid #e1e2db;
 }
 
 .eventsListItem {
