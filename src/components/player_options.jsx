@@ -41,12 +41,14 @@ export class PlayerOptions extends React.Component {
   render() {
     return (
       <div>
-        <select
-          placeholder="Select option"
+        <Select
+          variant="outline"
+          size="lg"
+          placeholder="Select pitcher"
           onChange={this.updateSelectedPlayer}
         >
           {this.renderOptionsList()}
-        </select>
+        </Select>
       </div>
     );
   }

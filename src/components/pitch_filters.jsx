@@ -15,7 +15,7 @@ export class PitchFilters extends React.Component {
   constructor(props) {
     super(props);
     this.filterOptions = props.filterOptions;
-    
+
     this.updateFilters = this.updateFilters.bind(this);
 
     this.state = {
@@ -49,7 +49,12 @@ export class PitchFilters extends React.Component {
 
   render() {
     return (
-      <select placeholder="Select option" onChange={this.updateFilters}>
+      <Select
+        variant="outline"
+        size="lg"
+        placeholder="Select option"
+        onChange={this.updateFilters}
+      >
         {this.filterOptions.map((option, index) => {
           return (
             <option key={index} value={option.value}>
@@ -57,7 +62,7 @@ export class PitchFilters extends React.Component {
             </option>
           );
         })}
-      </select>
+      </Select>
     );
   }
 }
