@@ -61,8 +61,8 @@ export class ChartPitchTypes extends React.Component {
   render() {
     return (
       <div>
-        <h4>Pitch distribution ({this.state.numPitches} pitches)</h4>
-        <Pie data={this.state.chartData} options={this.state.chartOptions}></Pie>
+        <h4>Pitch distribution ({this.state.numPitches || 0} pitches)</h4>
+        {this.state.numPitches && <Pie data={this.state.chartData} options={this.state.chartOptions}></Pie>}
       </div>
     );
   }

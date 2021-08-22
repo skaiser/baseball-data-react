@@ -44,3 +44,8 @@
   padding: 16px;
   margin: 0;
 }
+
+.emptyList {
+  font-size: 14px;
+  padding: 16px;
+}

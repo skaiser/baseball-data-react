@@ -55,9 +55,10 @@ export class PitchList extends React.Component {
         <p className={css.instructions}>
           <span>Hover an item to highlight it in the chart.</span>
         </p>
-        <ul className={css.events}>
+        {this.props.pitchEvents.length === 0 && <p className={css.emptyList}>No pitches match the selected criteria.</p>}
+        {this.props.pitchEvents.length > 0 && <ul className={css.events}>
           {this.renderPitchEvents(this.props.pitchEvents)}
-        </ul>
+        </ul>}
       </div>
     );
   }
