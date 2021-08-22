@@ -43,7 +43,6 @@ function feetToInches(feet) {
 export class ChartPitchZone extends React.Component {
   constructor(props) {
     super(props);
-    this.draw = this.draw.bind(this);
     this.updateHighlightedPitch = this.updateHighlightedPitch.bind(this);
     
     this.pitchZoneRef = React.createRef();
@@ -52,6 +51,7 @@ export class ChartPitchZone extends React.Component {
     };
   }
   
+  // This is needed to trigger a draw when the parent state updates this.props.
   componentWillReceiveProps(nextProps) {
     this.draw(nextProps.pitchEvents || []);
   }
@@ -74,9 +74,8 @@ export class ChartPitchZone extends React.Component {
     return canvas.width / BATTING_AREA_INCHES;
   }
   
-  // TODO(kaisers): Get rid of need to pass pitchEvents
   draw(pitchEvents) {
-    pitchEvents = pitchEvents || this.props.pitchEvents || [];
+    pitchEvents = pitchEvents || [];
     console.log('%c pitchEvents zone', 'background: orange;', pitchEvents);
   
     requestAnimationFrame(() => {

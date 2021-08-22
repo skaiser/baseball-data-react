@@ -3,16 +3,6 @@ import PropTypes from "prop-types";
 import css from "./pitch_list.module.css";
 
 export class PitchList extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.selectItem = this.selectItem.bind(this);
-    this.deselectItem = this.deselectItem.bind(this);
-    this.renderPitchEvents = this.renderPitchEvents.bind(this);
-    this.getPitchTypeString = this.getPitchTypeString.bind(this);
-    this.getPlayString = this.getPlayString.bind(this);
-  }
-
   selectItem(index) {
     this.props.onSelectionChange(index);
   }
@@ -36,13 +26,12 @@ export class PitchList extends React.Component {
 
   renderPitchEvents(pitches) {
     return pitches.map((event, index) => {
-      // TODO(kaisers): Mouse events are not working.
       return (
         <li
           key={event.play_id}
           className={css.eventsListItem}
-          onMouseOver={(e) => this.selectItem(index, e)}
-          onMouseOut={this.deselectItem}
+          onMouseOver={() => this.selectItem(index)}
+          onMouseOut={() => this.deselectItem()}
         >
           {event.pitch_name}
           <span>{this.getPlayString(event)}</span>
