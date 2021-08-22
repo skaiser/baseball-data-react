@@ -69,6 +69,6 @@ export class ChartPitchTypes extends React.Component {
 }
 
 ChartPitchTypes.propTypes = {
-  // TODO(kaisers): define an interface for the type
+  // TODO(kaisers): Add formal PitchEvents type
   pitchEvents: PropTypes.array,
 }

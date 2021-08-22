@@ -1,0 +1,23 @@
+.chartContainer {
+  position: relative;
+}
+
+.chartBatter {
+  position: absolute;
+  bottom: 0;
+  height: 54%;
+}
+
+.chartBatter.rh {
+  left: 16%;
+}
+
+.chartBatter.lh {
+  right: 16%;
+}
+
+/* Allows parent component to set height. */
+canvas {
+  height: inherit;
+  width: inherit;
+}

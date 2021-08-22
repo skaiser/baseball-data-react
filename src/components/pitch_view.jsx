@@ -3,6 +3,7 @@ import { Spinner } from "@chakra-ui/react";
 import Request from "axios-react";
 import axios from "axios";
 import { ChartPitchTypes } from "../components/chart_pitch_types";
+import { ChartPitchZone } from "../components/chart_pitch_zone";
 import { Header } from "../components/header";
 import { PlayerOptions } from "../components/player_options";
 import { PitchFilters } from "../components/pitch_filters";
@@ -30,10 +31,6 @@ export class PitchView extends React.Component {
       players: [],
       pitchMap: new Map()
     };
-  }
-
-  renderPitchEvents(pitches) {
-    return pitches.map(item => <li key={item.play_id}>{item.pitch_name}</li>);
   }
 
   componentDidMount() {
@@ -73,7 +70,6 @@ export class PitchView extends React.Component {
   updatePlayer(selectedPlayer) {
     const pitchEvents = this.state.pitchMap.get(selectedPlayer) || [];
     this.setState({ selectedPlayer, pitchEvents }, () => {
-      this.renderPitchEvents(pitchEvents);
       this.updateFilters(["all"]);
     });
   }
@@ -101,9 +97,6 @@ export class PitchView extends React.Component {
           }
           return found;
         })
-      },
-      () => {
-        this.renderPitchEvents(this.state.pitchEvents);
       }
     );
   }
@@ -123,12 +116,10 @@ export class PitchView extends React.Component {
           />
         )}
         {!this.state.isLoaded && <Spinner />}
-        {this.state.isLoaded && (
+        {this.state.isLoaded && this.state.selectedPlayer && (
           <div>
-            {this.state.selectedPlayer && (
-              <ChartPitchTypes pitchEvents={this.state.pitchEvents} />
-            )}
-            {<ul>{this.renderPitchEvents(this.state.pitchEvents)}</ul>}
+            <ChartPitchTypes pitchEvents={this.state.pitchEvents} />
+            <ChartPitchZone pitchEvents={this.state.pitchEvents} />
           </div>
         )}
       </>
