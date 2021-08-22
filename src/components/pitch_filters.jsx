@@ -26,7 +26,7 @@ export class PitchFilters extends React.Component {
     const maybeEvent =
       filters && filters.target && filters.target.selectedOptions;
     if (maybeEvent) {
-      // TODO(kaisers): How to get the full list?
+      // TODO(kaisers): Get the full list?
       filters = [filters.target.options[filters.target.selectedIndex].value];
     }
     if (!filters) {
@@ -41,7 +41,6 @@ export class PitchFilters extends React.Component {
         break;
       }
     }
-    console.log("filters", filters);
     this.setState({ appliedFilters: filters }, () => {
       this.props.onFiltersChange(this.state.appliedFilters);
     });

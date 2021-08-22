@@ -33,7 +33,6 @@ export class PlayerOptions extends React.Component {
       return;
     }
     const selectedPlayer = event.target.value;
-    console.log("selectedPlayer", selectedPlayer);
     this.setState({ selectedPlayer }, () => {
       this.props.onPlayerChange(this.state.selectedPlayer);
     });

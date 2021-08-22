@@ -14,5 +14,6 @@
       "src/" 
     ]
   },
-  "noSavedEvents": true
+  "noSavedEvents": true,
+  "throttle": 500
 }

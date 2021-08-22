@@ -2,6 +2,7 @@ import * as React from "react";
 import { Spinner } from "@chakra-ui/react";
 import Request from "axios-react";
 import axios from "axios";
+import { ChartPitchTypes } from "../components/chart_pitch_types";
 import { Header } from "../components/header";
 import { PlayerOptions } from "../components/player_options";
 import { PitchFilters } from "../components/pitch_filters";
@@ -42,7 +43,7 @@ export class PitchView extends React.Component {
       )
       .then(response => {
         const allPitchEvents = response.data.queryResults.row;
-        console.log("allPitchEvents", allPitchEvents);
+        // console.log("allPitchEvents", allPitchEvents);
 
         const players = new Set();
         for (const p of allPitchEvents) {
@@ -74,7 +75,6 @@ export class PitchView extends React.Component {
     this.setState({ selectedPlayer, pitchEvents }, () => {
       this.renderPitchEvents(pitchEvents);
       this.updateFilters(["all"]);
-      console.log("event from child", this.state.selectedPlayer);
     });
   }
 
@@ -82,13 +82,13 @@ export class PitchView extends React.Component {
     this.setState({ appliedFilters: filters });
     const pitchEvents =
       this.state.pitchMap.get(this.state.selectedPlayer) || [];
-    console.log("all pitchEvents %s", this.state.selectedPlayer, pitchEvents);
-    
+    // console.log("all pitchEvents %s", this.state.selectedPlayer, pitchEvents);
+
     if (filters[0] === "all") {
       this.setState({ pitchEvents });
       return;
     }
-    
+
     this.setState(
       {
         pitchEvents: pitchEvents.filter(p => {
@@ -123,15 +123,14 @@ export class PitchView extends React.Component {
           />
         )}
         {!this.state.isLoaded && <Spinner />}
-        {this.state.isLoaded &&
-         <div>
-            {this.state.selectedPlayer && 
-              <p>Pitch count: {this.state.pitchEvents.length || 0}</p>
-            }
-            {
-            <ul>{this.renderPitchEvents(this.state.pitchEvents)}</ul>
-            }
-        </div>}
+        {this.state.isLoaded && (
+          <div>
+            {this.state.selectedPlayer && (
+              <ChartPitchTypes pitchEvents={this.state.pitchEvents} />
+            )}
+            {<ul>{this.renderPitchEvents(this.state.pitchEvents)}</ul>}
+          </div>
+        )}
       </>
     );
   }
