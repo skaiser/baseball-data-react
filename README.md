@@ -1,2 +1,7 @@
-# baseball-data-react
-React implementation of baseball-data
+# Baseball Data - React Version
+
+Re-implementation of my Angular version of [baseball-data](https://github.com/skaiser/baseball-data) in order to learn React. Both implementations were timeboxed to around 8 hours, so there's plenty of opportunity to improve the experience!
+
+The combinations of what can be done are endless. I thought about what I would value most as a coach and then prioritized based on what I thought I could get done within the time constraints. So, as a pitching coach: pitch release point, pitch type, location, velocity and result (e.g., swinging_strike). And, as a hitting coach: pitch distribution, the "out pitch", and also pitch release point. Basic info for most of these are combined in the "pitch zone" graph at the bottom with the pitch distribution and filters picking up the rest.
+
+There are many things I would like to add with more time. I think the coaches should be able to get any combination of the data they want to see, so I'd like much more flexible filters and to be able to combine multiple filters in a single view. The pitch zone graph is also very rudimentary at this point. I'd like to have it more at a batter's eye view and also have a more accurate flight path of the ball with animated velocity - and of course, a legend for it :) I'd also like to be able to show only a single pitch in that graph and also hover the graph in addition to hovering the list items. More graphs of things like velocity range, pitch locations and results, pitch distribution (and location) for any count. It's pretty endless. But, I tried to focus on what types of things might be indicative of a place for improvement vs probabilities (e.g., release point consistency), so coaches could help players improve in that area and be able to easily see it change in the graphs.

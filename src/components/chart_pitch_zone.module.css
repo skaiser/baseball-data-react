@@ -1,0 +1,36 @@
+.host {
+  height: 375px;
+  /* width: 375px; */
+  display: flex;
+  margin-top: 24px;
+  overflow-y: hidden;
+  position: relative;
+}
+
+.chartContainer {
+  position: relative;
+}
+
+.chartBatter {
+  position: absolute;
+  bottom: 0;
+  height: 54%;
+}
+
+.chartBatter.rh {
+  left: 16%;
+}
+
+.chartBatter.lh {
+  right: 16%;
+}
+
+/* Allows parent component to set height. */
+canvas {
+  height: inherit;
+  width: inherit;
+}
+
+.PitchList {
+  overflow-y: scroll;
+}

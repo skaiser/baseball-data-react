@@ -1,0 +1,58 @@
+/* a minimalist set of CSS resets */
+
+/* default to border-box */
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+/* adjust typography defaults */
+body {
+  background: #fafafa;
+  font-family: Quicksand, Roboto, sans-serif;
+  line-height: 1.4;
+  margin: 0;
+  padding: 0;
+}
+
+/* images and videos max out at full width */
+img,
+video {
+  height: auto;
+  max-width: 100%;
+}
+
+:root {
+  --header-height: 72px;
+  --theme-primary-color: #162341;
+  --theme-secondary-color: #eb6e1f;
+  --theme-warn-color: #f44336;
+}
+
+.header {
+  background: var(--theme-primary-color);
+  color: #fff;
+  display: block;
+  height: var(--header-height, 72px);
+  padding: 16px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.logo {
+  height: 100%;
+}
+
+.flex-spacer {
+  flex: 1 1 auto;
+}
+
+.chakra-select__wrapper {
+  margin-bottom: 16px;
+  max-width: 300px;
+}
