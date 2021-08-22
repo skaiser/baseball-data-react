@@ -2,6 +2,7 @@ import * as React from "react";
 
 import {Header} from "../components/header";
 import {PitchView} from "../components/pitch_view";
+import css from './home.module.css';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -15,7 +16,12 @@ export default class Home extends React.Component {
     return (
       <>
         <Header name={this.title} logo={this.logoUrl} />
-        <PitchView></PitchView>
+        <div className={css.content}>
+          <p className={css.intro}>
+            Select a pitcher from the options below to view pitch stats.
+          </p>
+          <PitchView></PitchView>
+        </div>
       </>
     );
   }

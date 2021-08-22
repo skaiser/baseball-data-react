@@ -1,3 +1,12 @@
+.host {
+  height: 375px;
+  /* width: 375px; */
+  display: flex;
+  margin-top: 24px;
+  overflow-y: hidden;
+  position: relative;
+}
+
 .chartContainer {
   position: relative;
 }
@@ -20,4 +29,8 @@
 canvas {
   height: inherit;
   width: inherit;
+}
+
+.PitchList {
+  overflow-y: scroll;
 }

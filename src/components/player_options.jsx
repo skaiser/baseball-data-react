@@ -12,20 +12,13 @@ export class PlayerOptions extends React.Component {
   }
 
   renderOptionsList() {
-    return (
-      <>
-        <option key="none" value="">
-          Select a pitcher
+    return this.props.players.map((player, index) => {
+      return (
+        <option key={index} value={player}>
+          {player}
         </option>
-        {this.props.players.map((player, index) => {
-          return (
-            <option key={index} value={player}>
-              {player}
-            </option>
-          );
-        })}
-      </>
-    );
+      );
+    });
   }
 
   updateSelectedPlayer(event) {
@@ -40,16 +33,15 @@ export class PlayerOptions extends React.Component {
 
   render() {
     return (
-      <div>
-        <Select
-          variant="outline"
-          size="lg"
-          placeholder="Select pitcher"
-          onChange={this.updateSelectedPlayer}
-        >
-          {this.renderOptionsList()}
-        </Select>
-      </div>
+      <Select
+        className="PlayerOptions"
+        variant="outline"
+        size="lg"
+        placeholder="Select a pitcher"
+        onChange={this.updateSelectedPlayer}
+      >
+        {this.renderOptionsList()}
+      </Select>
     );
   }
 }

@@ -33,7 +33,6 @@ export class PitchList extends React.Component {
           onMouseOver={() => this.selectItem(index)}
           onMouseOut={() => this.deselectItem()}
         >
-          {event.pitch_name}
           <span>{this.getPlayString(event)}</span>
           <span className={css.pitchType}>
             {this.getPitchTypeString(event)}

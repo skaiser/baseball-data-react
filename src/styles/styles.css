@@ -51,3 +51,7 @@ video {
 .flex-spacer {
   flex: 1 1 auto;
 }
+
+.chakra-select__wrapper {
+  margin-bottom: 16px;
+}

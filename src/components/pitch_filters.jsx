@@ -52,7 +52,6 @@ export class PitchFilters extends React.Component {
       <Select
         variant="outline"
         size="lg"
-        placeholder="Select option"
         onChange={this.updateFilters}
       >
         {this.filterOptions.map((option, index) => {

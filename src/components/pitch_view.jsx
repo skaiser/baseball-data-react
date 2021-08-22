@@ -8,6 +8,7 @@ import { Header } from "../components/header";
 import { PlayerOptions } from "../components/player_options";
 import { PitchFilters } from "../components/pitch_filters";
 import PropTypes from "prop-types";
+import css from './pitch_view.module.css';
 
 export class PitchView extends React.Component {
   constructor(props) {
@@ -117,8 +118,10 @@ export class PitchView extends React.Component {
         )}
         {!this.state.isLoaded && <Spinner />}
         {this.state.isLoaded && this.state.selectedPlayer && (
-          <div>
-            <ChartPitchTypes pitchEvents={this.state.pitchEvents} />
+          <div className={css.charts}>
+            <div className={css.ChartPitchTypes}>
+              <ChartPitchTypes pitchEvents={this.state.pitchEvents} />
+            </div>
             <ChartPitchZone pitchEvents={this.state.pitchEvents} />
           </div>
         )}

@@ -205,7 +205,7 @@ export class ChartPitchZone extends React.Component {
   
   render() {
     return (
-      <>
+      <div className={css.host}>
         <div className={css.chartContainer}>
           <canvas ref={this.pitchZoneRef} height="375" width="375"></canvas>
           <img
@@ -219,9 +219,11 @@ export class ChartPitchZone extends React.Component {
             alt="Left hand batter"
           />
         </div>
-        <PitchList pitchEvents={this.props.pitchEvents} 
-          onSelectionChange={this.updateHighlightedPitch} />
-      </>
+        <div className={css.PitchList}>
+          <PitchList pitchEvents={this.props.pitchEvents} 
+            onSelectionChange={this.updateHighlightedPitch} />
+        </div>
+      </div>
     );
   }
 }
