@@ -2,7 +2,8 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import { Select } from "@chakra-ui/react";
 
-const strikeTypes = [
+// TODO(kaisers): Move into shared location
+export const strikeTypes = [
   "called_strike",
   "foul",
   "foul_tip",

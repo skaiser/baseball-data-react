@@ -14,12 +14,11 @@ export class PitchList extends React.Component {
   }
 
   selectItem(index) {
-    // TODO(kaisers): Clean this select/deselect intercace up.
     this.props.onSelectionChange(index);
   }
 
-  deselectItem(index) {
-    this.props.onSelectionChange(index);
+  deselectItem() {
+    this.props.onSelectionChange(null);
   }
 
   getPlayString(play) {
@@ -42,8 +41,8 @@ export class PitchList extends React.Component {
         <li
           key={event.play_id}
           className={css.eventsListItem}
-          onMouseOver={this.selectItem(index)}
-          onMouseOut={this.deselectItem(index)}
+          onMouseOver={(e) => this.selectItem(index, e)}
+          onMouseOut={this.deselectItem}
         >
           {event.pitch_name}
           <span>{this.getPlayString(event)}</span>

@@ -2,7 +2,7 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import { Pie } from 'react-chartjs-2';
 
-const CHART_COLORS = {
+const CHART_COLORS = Object.freeze({
   red: 'rgb(255, 99, 132)',
   orange: 'rgb(255, 159, 64)',
   yellow: 'rgb(255, 205, 86)',
@@ -10,7 +10,7 @@ const CHART_COLORS = {
   blue: 'rgb(54, 162, 235)',
   purple: 'rgb(153, 102, 255)',
   grey: 'rgb(201, 203, 207)',
-};
+});
 
 export class ChartPitchTypes extends React.Component {
   constructor(props) {
