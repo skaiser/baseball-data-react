@@ -23,12 +23,11 @@ export const PitchView = () => {
   const [pitchMap, setPitchMap] = React.useState(new Map());
   const [pitchEvents, setPitchEvents] = React.useState([]);
   const [selectedPlayer, setSelectedPlayer] = React.useState("");
-  // const [pitchFilterReset, setPitchFilterReset] = React.useState(true);
+  const [selectedPitchFilter, setSelectedPitchFilter] = React.useState(["all"]);
 
   React.useEffect(() => {
     axios
       .get(
-        // "https://raw.githubusercontent.com/rd-astros/hiring-resources/master/pitches.json"
         "https://cdn.glitch.global/1fb57210-43d7-460f-9d98-1340332c092a/pitches.json?v=1693410225510"
       )
       .then((response) => {
@@ -59,21 +58,17 @@ export const PitchView = () => {
   }, []);
 
   React.useEffect(() => {
-    updatePitchEventsByFilter(["all"]);
+    updatePitchEventsByFilter(selectedPitchFilter);
   }, [selectedPlayer]);
 
   const updatePlayer = (newSelectedPlayer) => {
     const pitchEvents = pitchMap.get(newSelectedPlayer) || [];
-    // if (newSelectedPlayer !== selectedPlayer) {
-    //   setPitchFilterReset(true);
-    // } else {
-    //   setPitchFilterReset(false);
-    // }
     setSelectedPlayer(newSelectedPlayer);
     setPitchEvents(pitchEvents);
   };
 
   const updatePitchEventsByFilter = (filters) => {
+    setSelectedPitchFilter(filters);
     const pitchEvents = pitchMap.get(selectedPlayer) || [];
     // console.log("all pitchEvents %s", this.state.selectedPlayer, pitchEvents);
 
