@@ -8,22 +8,17 @@ export const strikeTypes = [
   "foul",
   "foul_tip",
   "swinging_strike",
-  "swinging_strike_blocked"
+  "swinging_strike_blocked",
 ];
 
-export class PitchFilters extends React.Component {
-  constructor(props) {
-    super(props);
-    this.filterOptions = props.filterOptions;
+export const PitchFilters = (props) => {
+  const [appliedFilters, setAppliedFilters] = React.useState(["all"]);
 
-    this.updateFilters = this.updateFilters.bind(this);
+  React.useEffect(() => {
+    props.onFiltersChange(appliedFilters);
+  }, [appliedFilters]);
 
-    this.state = {
-      appliedFilters: ["all"]
-    };
-  }
-
-  updateFilters(filters) {
+  const updateFilters = (filters) => {
     const maybeEvent =
       filters && filters.target && filters.target.selectedOptions;
     if (maybeEvent) {
@@ -31,7 +26,7 @@ export class PitchFilters extends React.Component {
       filters = [filters.target.options[filters.target.selectedIndex].value];
     }
     if (!filters) {
-      filters = this.state.appliedFilters;
+      filters = appliedFilters;
     }
     if (typeof filters === "string") {
       filters = [filters];
@@ -42,33 +37,25 @@ export class PitchFilters extends React.Component {
         break;
       }
     }
-    this.setState({ appliedFilters: filters }, () => {
-      this.props.onFiltersChange(this.state.appliedFilters);
-    });
-  }
+    setAppliedFilters(filters);
+  };
 
-  render() {
-    return (
-      <Select
-        variant="outline"
-        size="lg"
-        onChange={this.updateFilters}
-      >
-        {this.filterOptions.map((option, index) => {
-          return (
-            <option key={index} value={option.value}>
-              {option.displayName}
-            </option>
-          );
-        })}
-      </Select>
-    );
-  }
-}
+  return (
+    <Select variant="outline" size="lg" onChange={updateFilters}>
+      {props.filterOptions.map((option) => {
+        return (
+          <option key={option.value} value={option.value}>
+            {option.displayName}
+          </option>
+        );
+      })}
+    </Select>
+  );
+};
 
 PitchFilters.propTypes = {
   onFiltersChange: PropTypes.func.isRequired,
   // TODO(kaisers): Add Array<{value, displayName}> type
   // TODO(kaisers): Also consider keeping this defined locally
-  filterOptions: PropTypes.array
+  filterOptions: PropTypes.array,
 };
