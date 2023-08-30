@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Welcome} from "./welcome";
+import {Welcome} from "./Welcome";
 
 export const Header = (props) => {
   return (
